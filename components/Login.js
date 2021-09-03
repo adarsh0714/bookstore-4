@@ -29,10 +29,10 @@ export default class Login extends Component {
                 <View style={{
                     flexDirection: 'column'
                 }}>
-                    <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.onLoginButton()}>
+                    <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]}>
                         <Text style={styles.loginText}>SIGN IN</Text>
                     </TouchableHighlight>
-                    <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.onLoginButton()}>
+                    <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]}>
                         <Text style={styles.loginText}>SIGN UP</Text>
                     </TouchableHighlight>
                 </View>
