@@ -26,7 +26,7 @@ export default class Login extends Component {
     re = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
     onLoginButton = () => {
-        if (re.test(this.state.email) && this.state.email == this.state.password) {
+        if (this.re.test(this.state.email) && this.state.email == this.state.password) {
             this.props.navigation.navigate('Home', {});
             this.setState({
                 email: '',
