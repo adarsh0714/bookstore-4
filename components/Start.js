@@ -10,6 +10,8 @@ import {
     Alert,
     SafeAreaView
 } from 'react-native';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
 export default class Sign extends Component {
     constructor(props) {
@@ -22,12 +24,12 @@ export default class Sign extends Component {
     onSigninButton = () => {
         //this.props.navigation.navigate('Signin');
         //func needs to get called
-        alert("onSigninButton")
+        this.props.navigation.navigate('Login');
         }
 
     onSignupButton = () => {
         //this.props.navigation.navigate('Signup');
-        alert("onSignupButton")
+        this.props.navigation.navigate('Login');
         }
 
     render() {
