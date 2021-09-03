@@ -7,155 +7,128 @@ import {
     Button,
     TouchableHighlight,
     Image,
-    Alert
+    Alert,
+    SafeAreaView
 } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import { getUsersByEmail, addUsers } from '../services/Users';
 
-export default class Login extends Component {
-
+export default class Sign extends Component {
     constructor(props) {
-        super(props)
+        super(props);
     }
+    static navigationOptions = {
+        headerTitle: 'Welcome to Book Store'
+    };
 
-    state = {
-        email: '',
-        password: ''
-    }
-
-    re = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-
-    onLoginButton = () => {
-        if (this.re.test(this.state.email) && this.state.email == this.state.password) {
-            this.props.navigation.navigate('Home', {});
-            this.setState({
-                email: '',
-                password: ''
-            });
-
-        } else {
-            alert('Username/Password are incorrect.');
+    onSigninButton = () => {
+        //this.props.navigation.navigate('Signin');
+        //func needs to get called
+        alert("onSigninButton")
         }
-    }
+
+    onSignupButton = () => {
+        //this.props.navigation.navigate('Signup');
+        alert("onSignupButton")
+        }
 
     render() {
         return (
-            <View style={styles.container}>
-                <View style={{flexDirection:'row'}}>
-                    <TouchableOpacity style={[ styles.loginButton1 ]}>
-                        <Text style={[styles.login]}>SIGN IN</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={[ styles.loginButton2 ]}>
-                        <Text style={[styles.login]}>SIGN UP</Text>
-                    </TouchableOpacity>
+            <SafeAreaView>
+                <View style={styles.container}>
+                    <Image 
+                 source={require('../components/BookStore.png')}
+                 style={{position:'absolute',top:0,width:390}}
+                />
+        <Text style={styles.base1Text}>Welcome</Text>
+        <Text style={styles.base2Text}>to Book Store</Text>
+        <Text style={styles.base3Text}>Let's get Started!</Text>
+        <TouchableHighlight style={[styles.buttonContainer1, styles.loginButton1,styles.x]} onPress={() => this.onSigninButton()}>
+                <Text style={styles.loginText}>SIGN IN</Text>
+        </TouchableHighlight>
+        <TouchableHighlight style={[styles.buttonContainer2, styles.loginButton2,styles.y]} onPress={() => this.onSignupButton()}>
+                <Text style={styles.loginText}>SIGN UP</Text>
+        </TouchableHighlight>
                 </View>
-                <View style={styles.inputContainer}>
-                    <TextInput style={styles.inputs}
-                        placeholder="Email"
-                        keyboardType="email-address"
-                        value={this.state.email}
-                        underlineColorAndroid='transparent'
-                        onChangeText={(email) => this.setState({ email })} />
-                </View>
-
-                <View style={styles.inputContainer}>
-                    <TextInput style={styles.inputs}
-                        placeholder="Password"
-                        secureTextEntry={true}
-                        value = {this.state.password}
-                        underlineColorAndroid='transparent'
-                        onChangeText={(password) => this.setState({ password })} />
-                </View>
-
-                <View styles={styles.continue}>
-                <TouchableHighlight style={[styles.continueContainer, styles.loginButton]} onPress={() => this.onLoginButton()}>
-                    <Text style={styles.loginText}>CONTINUE</Text>
-                </TouchableHighlight>
-                </View>
-
-                <View>
-                    <Text style={styles.forgotPassword}>FORGOT PASSWORD</Text>
-                </View>
-            </View>
+            </SafeAreaView>
         );
     }
 }
 
 const styles = StyleSheet.create({
+    base1Text:{
+        marginTop:400,
+        fontFamily:'Cochin',
+        fontSize:40,
+        marginHorizontal:100,
+        fontWeight:"bold",
+        alignItems: 'center',
+        justifyContent: 'center',
+        color: '#6200EE',
+        marginBottom:0,
+    },
+    base2Text:{
+        marginTop:0,
+        fontFamily: 'Cochin',
+        marginHorizontal:50,
+        fontSize:35,
+        fontWeight:"bold",
+        alignItems: 'center',
+        justifyContent: 'center',
+        color: '#6200EE',
+        marginBottom: 0,
+    },
+    base3Text:{
+        marginTop:10,
+        fontFamily: 'Cochin',
+        fontSize:15,
+        marginHorizontal:120,
+        fontWeight:"bold",
+        alignItems: 'center',
+        justifyContent: 'center',
+        color: '#6200EE',
+        marginBottom: 10,
+    },
     container: {
-        paddingTop: 20,
-        justifyContent: 'flex-start',
+        justifyContent: 'center',
         alignItems: 'center',
+        backgroundColor: '#ffffff',
     },
-    continue: {
-        marginTop: 200,
-    },
-    inputContainer: {
-        width: 250,
-        height: 45,
-        marginBottom: 20,
+    buttonContainer1: {
+        height: 50,
         flexDirection: 'row',
-        alignItems: 'center'
-    },
-    inputs: {
-        marginTop: 29,
-        height: 45,
-        borderBottomColor: 'grey',
-        borderBottomWidth: 1,
-        flex: 1,
-        color: 'black',
-        fontSize: 20,
-    },
-    continueContainer: {
-        height: 50,
-        width: 250,
-        borderRadius: 50,
         justifyContent: 'center',
         alignItems: 'center',
+        width: 220,
+        borderRadius: 0,
     },
-    inputIcon: {
-        width: 30,
-        height: 30,
-        marginLeft: 15,
-        justifyContent: 'center'
-    },
-    continueContainer: {
-        marginTop: 70,
+    buttonContainer2: {
         height: 50,
-        width: 300,
-        borderRadius: 50,
+        flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: "#6200EE",
+        width: 220,
+        borderRadius: 0,
     },
     loginButton1: {
-        backgroundColor: "#6200EE",
-        borderRadius: 60,
-        padding: 15,
-        paddingLeft: 20,
-        paddingRight: 20,
-        marginRight: 25,
+        backgroundColor: "#9599B3",
+        justifyContent: 'center',
     },
     loginButton2: {
-        borderRadius: 60,
-        padding: 15,
-        paddingLeft: 20,
-        paddingRight: 20,
-        marginLeft: 25,
+        backgroundColor: "#6200EE",
+        justifyContent: 'center',
     },
-    login: {
-        color: 'white',
-        fontSize: 16,
-        fontWeight: '600',
+    x: {
+        marginTop:80,
+        justifyContent: 'center',
+        marginLeft:170,   
+    },
+    y: {
+        marginTop:0,
+        justifyContent: 'center',
+        marginLeft:170,   
     },
     loginText: {
         color: 'white',
-        fontSize: 16,
-        fontWeight: '600',
+        fontWeight:"bold",
     },
-    forgotPassword:{
-        padding: 40,
-        fontSize: 15,
-        color: "#6200EE",
-    },
+
 });
