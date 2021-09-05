@@ -153,8 +153,8 @@ const styles = StyleSheet.create({
     fontSize:17,
   },
   photo: { 
-    height: 110,
-    width:110,
+    height: 95,
+    width: 75,
   },
   textbutton:{
     fontSize:16,
