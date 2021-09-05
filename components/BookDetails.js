@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Image,Alert,FlatList, SafeAreaView, StatusBar, StyleSheet, Text, TouchableOpacity, View, Button } from "react-native";
 import {getBooks} from '../service/BookData';
+import {doAdd} from '../services/CartData'
 
 const Item = ({ item,style,onPress,alert}) => (
     <TouchableOpacity onPress={onPress} style={[styles.item, style]}>
@@ -54,7 +55,7 @@ const HomeScreen = () => {
             item={item}
             onPress={() => setSelectedId(item.id)}
             style={{ backgroundColor }}
-            alert={()=>{createTwoButtonAlert()}}
+            alert={()=>{createTwoButtonAlert(item.id)}}
             />
         );
     };
@@ -69,7 +70,11 @@ const HomeScreen = () => {
             onPress: () => console.log("Cancel Pressed"),
             style: "cancel"
           },
-          { text: "OK", onPress: () => console.log("OK Pressed") }
+          { text: "OK", onPress: async () => {
+            console.log(itemID);
+            await doAdd(itemID);
+            console.log("OK Pressed");
+          } }
         ]
       );
     }
