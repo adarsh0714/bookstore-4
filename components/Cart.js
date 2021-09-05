@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Image,Alert,FlatList, SafeAreaView, StatusBar, StyleSheet, Text, TouchableOpacity, View, Button } from "react-native";
+import { Image,Alert,FlatList, SafeAreaView, StatusBar, StyleSheet, Text, TouchableOpacity, View, Button, ViewBase } from "react-native";
 import { color } from "react-native-reanimated";
 import {getBooks,getBookById} from '../service/BookData';
 import { showCart,incrementCount,decrementCount} from "../service/CartData";
@@ -36,7 +36,7 @@ const Item = ({item,alert}) => (
                       </View>
                 </TouchableOpacity>
 
-                <View><Text style={{fontSize:18, color:'black',padding:10}}>9</Text></View>
+                <View><Text style={{fontSize:18, color:'black',padding:10}}>{item.count}</Text></View>
 
                 <TouchableOpacity onPress={()=>{console.log("- Pressed")}} style={{backgroundColor:'lightgrey',width:40,borderRadius:40}}>
                       <View style={{justifyContent:'center',alignItems:'center'}}>
@@ -50,22 +50,23 @@ const Item = ({item,alert}) => (
 );
 
 const HomeScreen = () => {
-    // let cartService = showCart();
-    // let cartDetails = [];
-    // temp={};
-    // for(let i=0;i<cartService.length;i++){
-    //     let tempBookData = getBookById(cartService[i].bookID);
-    //     temp['count']=cartService[i].count;
-    //     temp['by']=tempBookData.by;
-    //     temp['buy']=tempBookData.buy;
-    //     temp['subtitle']=tempBookData.subtitle;
-    //     temp['link']=tempBookData.link;    
-    // }
-    
+    let cartService = showCart();
+    let cartDetails = [];
+    temp={};
+    for(let i=0;i<cartService.length;i++){
+        var tempBookData = getBookById(cartService[i].bookID);
+        temp['count']=cartService[i].count;
+        temp['by']=tempBookData.by;
+        temp['buy']=tempBookData.buy;
+        temp['subtitle']=tempBookData.subtitle;
+        temp['link']=tempBookData.link; 
+        cartDetails.push(temp);
+        temp ={};
+    }
 
-    let cartDetails = getBooks();
     const [selectedId, setSelectedId] = useState(null);
     let [count, setCount] = useState(null);
+    let [price, setPrice] = useState(null);
 
     const renderItem = ({item}) => {
         return (
@@ -92,31 +93,52 @@ const HomeScreen = () => {
       );
     }
 
-    return (
-        <SafeAreaView style={styles.container}>
-
-          <View style={{flexDirection:"row",alignItems: 'center', justifyContent: 'center' }}>
-            <FlatList
-                data={cartDetails}
-                renderItem={renderItem}
-                keyExtractor={(item) => item.id}
-                extraData={selectedId}
-            />
+    const createPlaceOrderAlert = () =>{
+      Alert.alert(
+        "Alert",
+        "Are you sure you want to place Order?",
+        [
+          {
+            text: "Cancel",
+            onPress: () => console.log("Cancel Pressed"),
+            style: "cancel"
+          },
+          { text: "OK", onPress: () => console.log("Order Placed") }
+        ]
+      );
+    }
+    
+  return (
+    <SafeAreaView style={styles.container}>
+      <View style={{flexDirection:"column",alignItems: 'center', justifyContent: 'center' }}>
+        <FlatList
+            data={cartDetails}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id}
+            extraData={selectedId}
+        />
+        <View style={{flexDirection:"row",alignItems: 'center', justifyContent:'space-evenly',height:130,width:390}}>
+          <View style={{flexDirection:"column",alignItems:'flex-start', justifyContent:'flex-start',backgroundColor:'#f4f4f4',height:120,width:195}}>
+              <Text style={{fontSize:16,color:'darkgrey'}}>TOTAL</Text>
+              <Text style={{fontSize:24}}>$24.00</Text>
+              <Text style={{fontSize:16,color:'darkgrey'}}>Free Domestic Shipping</Text>
           </View>
-          <View style={{backgroundColor:"green",justifyContent:'flex-end',height:80,flexDirection:'row'}}>
-              <Text style={{fontSize:30}}>Adarsh </Text>
+          <View style={{flexDirection:"column",backgroundColor:'#f4f4f4',height:120,paddingTop:20}}>
+            <TouchableOpacity onPress={createPlaceOrderAlert} style={{alignItems: 'center', justifyContent: 'center',backgroundColor:'#6200ee',borderRadius:50}}>
+            <Text style={{fontSize:18,color:'white',padding:14,height:50,width:160,fontWeight:'bold'}}>PLACE ORDER</Text>
+            </TouchableOpacity>
           </View>
-          <View style={{backgroundColor:"red",justifyContent:'flex-end',height:80,flexDirection:'row'}}>
-              <Text style={{fontSize:30}}>Adarsh </Text>
-          </View>
-        </SafeAreaView>
-    );
+        </View>
+      </View>
+    </SafeAreaView>
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor:'#f4f4f4',
+    backgroundColor:'#f4f4ff',
     flex: 1,
+    flexDirection:'column',
     marginTop: StatusBar.currentHeight || 0,
   },
   item: {
