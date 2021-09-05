@@ -10,9 +10,20 @@ let books =[
     {id:8,by:'Rahul B',buy:'19',year:'2007',title:"Book 8",subtitle:"The Shark Caller",link:"https://training.pyther.com/yara/15-day/03-BookStore/books/9781474966849_cover_image.jpg"}
 ];
 
+let orderData = [];
+
 let cart=[
     {count:1,bookID:4},
 ];
+
+export var orderPlaced = () => {
+    orderData = cart;
+    cart = [];
+}
+
+export var showOrderData = ()=>{
+    return orderData;
+}
 
 export var showCart = ()=>{
     return cart;
