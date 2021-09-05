@@ -7,5 +7,5 @@ Deepak R\
 Adarsh Kumar\
 \
 \
-yarn add @react-native/native\
-yarn add @react-native\stack/
+yarn add @react-native\native\
+yarn add @react-native\stack
