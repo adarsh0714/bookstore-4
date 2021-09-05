@@ -21,7 +21,7 @@ const Drawer = createDrawerNavigator();
 
 function DrawerNav() {
   return (
-       <Drawer.Navigator initialRouteName="Home" drawerContent={props=><DrawerContent {...props}/>}>
+       <Drawer.Navigator initialRouteName="Home" drawerContent={props=><DrawerContent {...props}/>} screenOptions={{headerTintColor: 'white', headerStyle: {backgroundColor: '#6200ee'}}}>
         <Drawer.Screen name="Home" component={Home}/>
         <Drawer.Screen name="BookDetails" component={BookDetails}/>
         <Drawer.Screen name="Cart" component={Cart}/>
