@@ -21,12 +21,20 @@ export default class SignIn extends Component {
     }
 
     state = {
-        email: '',
-        password: ''
+        email: 'admin',
+        password: 'admin'
     }
 
     onLoginButton = () => {
-        this.props.navigation.navigate('Home', {});
+        if(this.state.email == this.state.password){
+            this.props.navigation.navigate('Home', { name: this.state.email });
+            this.setState({
+                email: '',
+                password: ''
+            });
+        } else {
+            alert("Username and Password should be same.")
+        }
     }
 
     goToSignup = () => {
