@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Image,Alert,FlatList, SafeAreaView, StatusBar, StyleSheet, Text, TouchableOpacity, View, Button, ViewBase } from "react-native";
 import { color } from "react-native-reanimated";
-import {getBooks,getBookById} from '../service/BookData';
-import { showCart,incrementCount,decrementCount} from "../service/CartData";
+import {getBooks,getBookById} from '../services/BookData';
+import { showCart,incrementCount,decrementCount} from "../services/CartData";
+import { useNavigation } from '@react-navigation/native';
 
-const Item = ({item,alert}) => (
+const Item = ({item,alert,AddItem,SubItem}) => (
     <View style={[styles.item]}>
         <View style={{
             flex: 1,
@@ -30,7 +31,7 @@ const Item = ({item,alert}) => (
               <Text style={{paddingTop:20,paddingBottom:10,color:'red',fontSize:18}}> ${item.buy}</Text>
               
               <View style={{flexDirection:'row',justifyContent:'flex-start'}}>
-                <TouchableOpacity onPress={()=>{console.log("- Pressed")}} style={{backgroundColor:'lightgrey',width:40,borderRadius:40}}>
+                <TouchableOpacity onPress={()=>SubItem()} style={{backgroundColor:'lightgrey',width:40,borderRadius:40}}>
                       <View style={{justifyContent:'center',alignItems:'center'}}>
                         <Text style={{fontSize:30,color:'black',fontWeight:'600'}}>-</Text>
                       </View>
@@ -38,7 +39,7 @@ const Item = ({item,alert}) => (
 
                 <View><Text style={{fontSize:18, color:'black',padding:10}}>{item.count}</Text></View>
 
-                <TouchableOpacity onPress={()=>{console.log("- Pressed")}} style={{backgroundColor:'lightgrey',width:40,borderRadius:40}}>
+                <TouchableOpacity onPress={()=>AddItem()} style={{backgroundColor:'lightgrey',width:40,borderRadius:40}}>
                       <View style={{justifyContent:'center',alignItems:'center'}}>
                         <Text style={{fontSize:30,color:'black'}}>+</Text>
                       </View>
@@ -50,29 +51,58 @@ const Item = ({item,alert}) => (
 );
 
 const HomeScreen = () => {
-    let cartService = showCart();
-    let cartDetails = [];
-    temp={};
-    for(let i=0;i<cartService.length;i++){
-        var tempBookData = getBookById(cartService[i].bookID);
-        temp['count']=cartService[i].count;
-        temp['by']=tempBookData.by;
-        temp['buy']=tempBookData.buy;
-        temp['subtitle']=tempBookData.subtitle;
-        temp['link']=tempBookData.link; 
-        cartDetails.push(temp);
-        temp ={};
-    }
+
 
     const [selectedId, setSelectedId] = useState(null);
     let [count, setCount] = useState(null);
     let [price, setPrice] = useState(null);
+    let [cartDetails,setCartDetails]=useState([])
+    let navigation = useNavigation();
+
+    loadCart = async()=>{
+      let cartService = showCart();
+      let cartDetail = [];
+      let totalCost=0
+      temp={};
+      for(let i=0;i<cartService.length;i++){
+          var tempBookData = getBookById(cartService[i].bookID);
+          temp['id']=cartService[i].bookID
+          temp['count']=cartService[i].count;
+          temp['by']=tempBookData.by;
+          temp['buy']=tempBookData.buy;
+          temp['subtitle']=tempBookData.subtitle;
+          temp['link']=tempBookData.link;
+          totalCost=totalCost+temp['count']*temp['buy']
+          cartDetail.push(temp);
+          temp ={};
+      }
+      setPrice(totalCost)
+      setCartDetails(cartDetail)
+    }
+  
+    useEffect(()=>{
+      const unsubscribe = navigation.addListener('focus', () => {
+        loadCart();
+      });
+      return unsubscribe;
+    },[navigation]);
+
 
     const renderItem = ({item}) => {
         return (
             <Item
             item={item}
             onPress={() => setSelectedId(item.id)}
+            AddItem={()=>{
+              console.log("wassup")
+              incrementCount(item.id)
+              loadCart();
+            }}
+            SubItem={()=>{
+              console.log("wassup")
+              decrementCount(item.id)
+              loadCart();
+            }}
             alert={()=>{createTwoButtonAlert()}}
             />
         );
@@ -103,7 +133,10 @@ const HomeScreen = () => {
             onPress: () => console.log("Cancel Pressed"),
             style: "cancel"
           },
-          { text: "OK", onPress: () => console.log("Order Placed") }
+          { text: "OK", onPress: () => {
+            console.log("Order Placed")
+          navigation.navigate('OrderPlaced')
+        }}
         ]
       );
     }
@@ -120,7 +153,7 @@ const HomeScreen = () => {
         <View style={{flexDirection:"row",alignItems: 'center', justifyContent:'space-evenly',height:130,width:390}}>
           <View style={{flexDirection:"column",alignItems:'flex-start', justifyContent:'flex-start',backgroundColor:'#f4f4f4',height:120,width:195}}>
               <Text style={{fontSize:16,color:'darkgrey'}}>TOTAL</Text>
-              <Text style={{fontSize:24}}>$24.00</Text>
+              <Text style={{fontSize:24}}>${price}</Text>
               <Text style={{fontSize:16,color:'darkgrey'}}>Free Domestic Shipping</Text>
           </View>
           <View style={{flexDirection:"column",backgroundColor:'#f4f4f4',height:120,paddingTop:20}}>
@@ -153,8 +186,8 @@ const styles = StyleSheet.create({
     fontSize:17,
   },
   photo: { 
-    height: 95,
-    width: 75,
+    height: 110,
+    width:110,
   },
   textbutton:{
     fontSize:16,
