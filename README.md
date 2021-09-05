@@ -1,15 +1,18 @@
 # BOOKSTORE-4
 
 Team-4 :\
-Vidya Shree G\
-N.S.S.Preetham\
-Deepak R\
-Adarsh Kumar\
+BOOKSTORE APPLICATION USING REACT NATIVE\
 \
 \
+TEAM MEMBERS:\
+      Vidya Shree G\
+      N.S.S.Preetham\
+      Deepak R\
+      Adarsh Kumar\
 \
-INSTRUCTIONS:\
-1. Install all the dependencies from the package.json file
+\
+INSTRUCTIONS:
+1. Install all the dependencies from the package.json file.
 
 2. For fonts:
       - create folder assets\fonts in the root directory
