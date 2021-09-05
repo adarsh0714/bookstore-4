@@ -11,7 +11,11 @@ let books =[
 ];
 
 let cart=[
-    {count=1,bookID=4},
+    {count:1,bookID:4},
+    {count:2,bookID:2},
+    {count:3,bookID:5},
+    {count:4,bookID:6},
+    {count:5,bookID:1}
 ];
 
 export var showCart = ()=>{
