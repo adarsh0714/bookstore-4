@@ -9,8 +9,20 @@ export default function OrderPlaced () {
         navigation.navigate('');   //next page link here
     }
 
+    const home = () => {
+        navigation.navigate(''); //home screen link
+    }
+
     return(
         <TouchableOpacity >
+            <TouchableOpacity onPress={() => {home()}}>
+                <Image
+                    style={styles.checkMark}
+                    source={{
+                    uri: "https://thumbs.dreamstime.com/b/purple-highlighter-cross-isolated-transparent-background-marker-pen-highlight-underline-vector-hand-drawn-graphic-stylish-215943419.jpg" ,
+                    }}
+                /> 
+            </TouchableOpacity>
             <View style={{
                 flex: 1,
                 justifyContent: 'center',
@@ -74,4 +86,11 @@ const styles = StyleSheet.create({
         color: 'white',
         fontWeight:"800"
     },
+    checkMark: {
+        width: 40,
+        height: 40,
+        marginLeft: 310,
+        marginTop: 90,
+        marginBottom: 10,
+    }
 });
