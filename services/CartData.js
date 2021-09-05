@@ -12,10 +12,6 @@ let books =[
 
 let cart=[
     {count:1,bookID:4},
-    {count:2,bookID:2},
-    {count:3,bookID:5},
-    {count:4,bookID:6},
-    {count:5,bookID:1}
 ];
 
 export var showCart = ()=>{
@@ -24,17 +20,23 @@ export var showCart = ()=>{
 
 export var doAdd = (data)=>{
     temp={};
+    flag=0;
     for(let i=0;i<cart.length;i++){
         if (cart[i].bookID==data){
             cart[i].count++;
-        }else{
-            temp['id']=1;
-            temp['bookID']=data;
-            cart.push(temp);
-            temp={};
+            flag=1;
+            break;
         }
-    } 
+    }
+    if(flag==0){
+        temp['count']=1;
+        temp['bookID']=data;
+        cart.push(temp);
+        temp={};
+    }
+    console.log("cart : "+JSON.stringify(cart))
 }
+
 export var incrementCount = (id)=>{
     for(let i=0;i<cart.length;i++){
         if (cart[i].bookID==id){
