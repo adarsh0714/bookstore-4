@@ -24,12 +24,12 @@ export default class Sign extends Component {
     onSigninButton = () => {
         //this.props.navigation.navigate('Signin');
         //func needs to get called
-        this.props.navigation.navigate('Login');
+        this.props.navigation.navigate('SignIn');
         }
 
     onSignupButton = () => {
         //this.props.navigation.navigate('Signup');
-        this.props.navigation.navigate('Login');
+        this.props.navigation.navigate('SignUp');
         }
 
     render() {
