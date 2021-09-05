@@ -135,15 +135,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: "#6200EE",
     },
-    loginButton2: {
+    loginButton1: {
+        backgroundColor: "#6200EE",
         borderRadius: 60,
         padding: 15,
         paddingLeft: 20,
         paddingRight: 20,
         marginRight: 25,
     },
-    loginButton1: {
-        backgroundColor: "#6200EE",
+    loginButton2: {
         borderRadius: 60,
         padding: 15,
         paddingLeft: 20,
