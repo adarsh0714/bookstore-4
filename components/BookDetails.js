@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Image,Alert,FlatList, SafeAreaView, StatusBar, StyleSheet, Text, TouchableOpacity, View, Button } from "react-native";
-import {getBooks} from '../service/BookData';
-import {doAdd} from '../services/CartData'
+import {getBooks} from '../services/BookData';
+import {doAdd} from '../services/CartData';
+import { useNavigation } from "@react-navigation/core";
 
-const Item = ({ item,style,onPress,alert}) => (
+const Item = ({ item,style,onPress, goToDesc, alert}) => (
     <TouchableOpacity onPress={onPress} style={[styles.item, style]}>
         <View style={{
             flex: 1,
@@ -29,7 +30,7 @@ const Item = ({ item,style,onPress,alert}) => (
               <Text style={styles.extra}>Buy : ${item.buy}</Text>
               
               <View style={{flexDirection:'row',justifyContent:'space-between',paddingTop:38}}>
-                  <TouchableOpacity style={styles.button}>
+                  <TouchableOpacity style={styles.button} onPress={goToDesc}>
                     <Text style={styles.textbutton}>More</Text>
                   </TouchableOpacity>
                   <TouchableOpacity style={styles.button} onPress={alert}>
@@ -48,19 +49,23 @@ const HomeScreen = () => {
     let bookDetails = getBooks();
     const [selectedId, setSelectedId] = useState(null);
 
+    let navigation = useNavigation();
+
     const renderItem = ({item}) => {
         const backgroundColor = item.id === selectedId ? "#6e3b6e" : "#ffffff";
         return (
             <Item
             item={item}
-            onPress={() => setSelectedId(item.id)}
             style={{ backgroundColor }}
+            goToDesc = {() => {
+              navigation.navigate('BookDescription', item);
+          }}
             alert={()=>{createTwoButtonAlert(item.id)}}
             />
         );
     };
 
-    const createTwoButtonAlert = () =>{
+    const createTwoButtonAlert = (itemID) =>{
       Alert.alert(
         "Alert",
         "Are you sure you want to add item in cart?",
@@ -70,9 +75,9 @@ const HomeScreen = () => {
             onPress: () => console.log("Cancel Pressed"),
             style: "cancel"
           },
-          { text: "OK", onPress: async () => {
+          { text: "OK", onPress: () => {
             console.log(itemID);
-            await doAdd(itemID);
+            doAdd(itemID);
             console.log("OK Pressed");
           } }
         ]
