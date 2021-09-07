@@ -17,8 +17,8 @@ INSTRUCTIONS:
 
 $> react-native init BookStore
 
-2. replace package.json and app.js in BookStore with the one in BookStore-4
-3. Move components,services folder from BookStore-4 to BookStore
+2. Replace the files package.json and app.js in BookStore with the one in BookStore-4
+3. Move components,services folders from BookStore-4 to BookStore
 4. Add the following lines in BookStore/ios/BookStore/info.plist at the end,
 
 <key>UIAppFonts</key>
@@ -42,7 +42,7 @@ $> react-native init BookStore
     </array>
 
 
-5. In terminal ,
+5. In terminal, run the following commands
 $> cd BookStore
 $> yarn install
 $> cd ios
