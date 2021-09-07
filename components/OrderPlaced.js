@@ -23,6 +23,7 @@ export default function OrderPlaced () {
             <Text style={styles.title}>Order Placed!</Text>
             <Text style={styles.text}>Your order was placed successfully.</Text>
             <TouchableHighlight style={[ styles.ordersButton ]} onPress={() => {
+                orderPlaced();
                 navigation.navigate('Orders')
             }}>
                     <Text style={styles.ordersText}> MY ORDERS</Text>
