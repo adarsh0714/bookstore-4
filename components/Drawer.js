@@ -16,8 +16,6 @@ import {
     Switch
 } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons'
-import { margin } from 'styled-system';
-import { color } from 'react-native-reanimated';
 
 
 export function DrawerContent(props){
