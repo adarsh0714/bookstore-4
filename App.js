@@ -41,6 +41,7 @@ function App() {
         <Stack.Screen options={{headerShown:false}} name="SignUp" component={SignUp} />
         <Stack.Screen options={{headerShown:false}} name="OrderPlaced" component={OrderPlaced} />
         <Stack.Screen name="BookDescription" component={BookDescription} />
+          <Stack.Screen name="Description" component={BookDescription} />
         <Stack.Screen options={{headerShown:false}} name="Home" component={DrawerNav} />
       </Stack.Navigator>
 
