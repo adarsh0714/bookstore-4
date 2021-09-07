@@ -5,11 +5,7 @@ import { orderPlaced } from "../services/CartData";
 
 export default function OrderPlaced () {
     const navigation = useNavigation();
-
-    const placeorder = () => {
-        navigation.navigate('');   //next page link here
-    }
-
+    
     return(
         <TouchableOpacity >
             <View style={{
@@ -27,7 +23,6 @@ export default function OrderPlaced () {
             <Text style={styles.title}>Order Placed!</Text>
             <Text style={styles.text}>Your order was placed successfully.</Text>
             <TouchableHighlight style={[ styles.ordersButton ]} onPress={() => {
-                orderPlaced();
                 navigation.navigate('Orders')
             }}>
                     <Text style={styles.ordersText}> MY ORDERS</Text>
